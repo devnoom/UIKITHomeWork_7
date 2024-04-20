@@ -17,8 +17,12 @@ class ViewController: UIViewController {
     func configureTableView() {
         view.addSubview(table)
         setTableViewDelegates()
-        table.rowHeight = 150
+        //table.rowHeight = 100
+        
         table.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
+        table.layer.masksToBounds = true
+        table.layer.borderColor = UIColor.black.cgColor
+        table.separatorStyle = .none
         table.pin(to: view)
     }
     
@@ -26,6 +30,7 @@ class ViewController: UIViewController {
         table.delegate = self
         table.dataSource = self
     }
+    
 }
 
 extension ViewController: UITableViewDataSource {
@@ -45,16 +50,24 @@ extension ViewController: UITableViewDataSource {
         // cell.imageForNews.load(url: currentNews.photoUrl)
         // Load image from URL if needed
         // Example:
+        //let selectedNews = newsArray[indexPath.row]
+        let detailsVC = detailsPageVC()
+        detailsVC.fromMain = currentNews
+        present(detailsVC, animated: true, completion: nil)
+
+        
+        
         
         
         return cell
     }
-
+    
 }
+
 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        150 // Height of the table view cell
+        150 
     }
 }
 
@@ -96,7 +109,7 @@ extension ViewController {
                 self.newsArray = newsResponseData.List
                 
                 DispatchQueue.main.async {
-                    self.table.reloadData() // Reload table view on main thread
+                    self.table.reloadData()
                 }
             } catch {
                 print("Error decoding news data: \(error.localizedDescription)")

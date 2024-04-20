@@ -4,10 +4,10 @@
 //
 //  Created by MacBook Air on 19.04.24.
 //
-
 import UIKit
 
 class detailsPageVC: UIViewController {
+    var fromMain: ViewController.news?
     var mainTittle: UILabel = {
         let mainTittle = UILabel()
         mainTittle.translatesAutoresizingMaskIntoConstraints = false
@@ -22,19 +22,22 @@ class detailsPageVC: UIViewController {
         detailsTime.translatesAutoresizingMaskIntoConstraints = false
         return detailsTime
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUI()
-      
+        if let fromMain = fromMain {
+            print(fromMain.title)
+            print(fromMain.time)
+            setUI()
+        }
     }
+
     func setUI() {
-        //view.backgroundColor = .cyan
         view.addSubview(mainTittle)
         view.addSubview(detailsTime)
         view.addSubview(detailsImage)
         view.addSubview(detailsDescription)
-        detailsTime.text = "22:33"
+        detailsTime.text = fromMain?.time
         detailsImage.backgroundColor = .black
         detailsDescription.backgroundColor = .red
         detailsImage.translatesAutoresizingMaskIntoConstraints = false

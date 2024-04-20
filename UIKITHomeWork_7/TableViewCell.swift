@@ -13,14 +13,33 @@ class TableViewCell: UITableViewCell {
         configureImageForNews()
         configureTitleForNews()
         configureTimeForNews()
-        setImageConstraints()
+        //setImageConstraints()
         setTitleConstraints()
         setTimeConstraints()
+        setupCellBorders()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+
+      
+
+        private func setupCellBorders() {
+            
+            self.contentView.layer.borderWidth = 2.0
+            self.contentView.layer.cornerRadius = 20
+            
+            self.contentView.layer.borderColor = UIColor.gray.cgColor
+            self.contentView.layer.masksToBounds = true
+        }
+    override func layoutSubviews() {
+           super.layoutSubviews()
+           contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 15, left: 20, bottom: 15, right: 20))
+       }
+    
+    
     
     func configureImageForNews() {
         imageForNews.layer.cornerRadius = 10
@@ -35,7 +54,7 @@ class TableViewCell: UITableViewCell {
     func configureTimeForNews() {
         timeForNews.numberOfLines = 1
         timeForNews.adjustsFontSizeToFitWidth = true
-        timeForNews.textColor = .gray // Adjust color if needed
+        timeForNews.textColor = .gray
     }
     
     func setImageConstraints() {
@@ -48,16 +67,21 @@ class TableViewCell: UITableViewCell {
     
     func setTitleConstraints() {
         titleForNews.translatesAutoresizingMaskIntoConstraints = false
-        titleForNews.leadingAnchor.constraint(equalTo: imageForNews.trailingAnchor, constant: 10).isActive = true
-        titleForNews.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        titleForNews.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
+        titleForNews.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30).isActive = true
+        titleForNews.topAnchor.constraint(equalTo: topAnchor, constant: 50).isActive = true
+        titleForNews.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30).isActive = true
+        titleForNews.font = .boldSystemFont(ofSize: 20)
+        titleForNews.numberOfLines = 3
+        //titleForNews.textColor = .white
+        titleForNews.lineBreakMode = .byTruncatingTail
+       
+        
     }
     
     func setTimeConstraints() {
         timeForNews.translatesAutoresizingMaskIntoConstraints = false
-        timeForNews.leadingAnchor.constraint(equalTo: titleForNews.leadingAnchor).isActive = true
-        timeForNews.topAnchor.constraint(equalTo: titleForNews.bottomAnchor, constant: 5).isActive = true
-        timeForNews.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
-        timeForNews.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
+        timeForNews.topAnchor.constraint(equalTo: topAnchor, constant: 25).isActive = true
+        timeForNews.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 200).isActive = true
+
     }
 }
